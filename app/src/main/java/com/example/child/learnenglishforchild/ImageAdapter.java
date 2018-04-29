@@ -50,14 +50,9 @@ public class ImageAdapter extends BaseAdapter {
         View view = layoutInflater.inflate(R.layout.item_image, parent, false);
 
         ImageView imageView = view.findViewById(R.id.img_item);
-//        RotateAnimation anim = new RotateAnimation(0f, 350f, 15f, 15f);
-//        anim.setInterpolator(new LinearInterpolator());
-//        anim.setRepeatCount(Animation.INFINITE);
-//        anim.setDuration(700);
-//
-//        imageView.setAnimation(anim);
+        ImageView images = view.findViewById(R.id.img_item_back);
         imageView.setImageResource(arrayList.get(position).getPicture());
-
+        images.setImageResource(arrayList.get(position).getPicture());
         return view;
     }
 

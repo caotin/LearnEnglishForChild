@@ -6,6 +6,7 @@ import android.media.AudioManager;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -41,78 +42,79 @@ Context context;
         listNum=random(3);
         setDefault(3);
         context=this;
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-            }
-        });
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                LayoutInflater layoutInflater = ((Activity) context).getLayoutInflater();
-                layoutInflater.in
+                View v=view;
+                if (view == null) {
+                    LayoutInflater inflater = (LayoutInflater) context
+                            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-                if (close.get(i)){
-                    return;
+                    //here is where you inflate your layout containing your viewflipper
+                    view = inflater.inflate(R.layout.item_image, null);
+
                 }
+                View rootLayout = v.findViewById(R.id.main_flip_layout);
+                View cardFace = v.findViewById(R.id.img_item);
+                View cardBack = v.findViewById(R.id.img_item_back);
 
-                if (listTick.get(i))
-                    return;
-                listTick.set(i,true);
+                FlipAnimation flipAnimation = new FlipAnimation(cardFace, cardBack);
 
-                tick.add(i);
-                if (tick.size()==1){
-                    arrayList2.set(i,arrayList.get(listNum[i]));
-                    imageAdapter.notifyDataSetChanged();
-                    return;
+                if (cardFace.getVisibility() == View.GONE)
+                {
+                    flipAnimation.reverse();
                 }
-                if (tick.size()==2){
-                    arrayList2.set(i,arrayList.get(listNum[i])); // hiển thị hình ảnh
-                    imageAdapter.notifyDataSetChanged();
-//                    new CountDownTimer(1000, 0) {
-//                        public void onFinish() {
-//                            // When timer is finished
-//                            // Execute your code here
+                rootLayout.startAnimation(flipAnimation);
+
+//                if (close.get(i)){
+//                    return;
+//                }
 //
-//                        }
+//                if (listTick.get(i))
+//                    return;
+//                listTick.set(i,true);
 //
-//                        public void onTick(long millisUntilFinished) {
-//                            // millisUntilFinished    The amount of time until finished.
-//                        }
-//                    }.start();
-
-
-                    if (listNum[tick.get(0)]==listNum[tick.get(1)]){ //thực hiện kiểm tra
-                        arrayList2.set(tick.get(0),new Image(R.drawable.background,AudioManager.SCO_AUDIO_STATE_CONNECTED));
-                        arrayList2.set(tick.get(1),new Image(R.drawable.background,AudioManager.SCO_AUDIO_STATE_CONNECTED));
-                        imageAdapter.notifyDataSetChanged();
-
-                        close.set(tick.get(0),true);
-                        close.set(tick.get(0),true);
-
-                        tick.clear();
-                        return;
-                    }else {
-                        arrayList2.set(tick.get(0),new Image(R.drawable.back,AudioManager.SCO_AUDIO_STATE_CONNECTED));
-                        imageAdapter.notifyDataSetChanged();
-                        listTick.set(tick.get(0),false);
-                        listTick.set(tick.get(1),false);
-
-                        tick.remove(0);
-                    }
-                }
+//                tick.add(i);
+//                if (tick.size()==1){
+//                    arrayList2.set(i,arrayList.get(listNum[i]));
+//
+//
+//
+//                    imageAdapter.notifyDataSetChanged();
+//                    return;
+//                }
+//                if (tick.size()==2){
+//                    arrayList2.set(i,arrayList.get(listNum[i])); // hiển thị hình ảnh
+//                    imageAdapter.notifyDataSetChanged();
+//
+//                    if (listNum[tick.get(0)]==listNum[tick.get(1)]){ //thực hiện kiểm tra
+//                        arrayList2.set(tick.get(0),new Image(R.drawable.background,AudioManager.SCO_AUDIO_STATE_CONNECTED));
+//                        arrayList2.set(tick.get(1),new Image(R.drawable.background,AudioManager.SCO_AUDIO_STATE_CONNECTED));
+//                        imageAdapter.notifyDataSetChanged();
+//
+//                        close.set(tick.get(0),true);
+//                        close.set(tick.get(0),true);
+//
+//                        tick.clear();
+//                        return;
+//                    }else {
+//                        arrayList2.set(tick.get(0),new Image(R.drawable.back,AudioManager.SCO_AUDIO_STATE_CONNECTED));
+//                        imageAdapter.notifyDataSetChanged();
+//                        listTick.set(tick.get(0),false);
+//                        listTick.set(tick.get(1),false);
+//
+//                        tick.remove(0);
+//                    }
+//                }
 
 
             }
         });
         imageAdapter=new ImageAdapter(this,arrayList2);
         gridView.setAdapter(imageAdapter);
-
-
-
 
 
     }

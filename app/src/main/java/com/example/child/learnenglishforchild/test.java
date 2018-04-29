@@ -24,30 +24,26 @@ public class test extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        gridView=findViewById(R.id.gv_play);
 
+    }
+    public void onCardClick(View view)
+    {
+        flipCard();
+    }
 
-        gridView.setAdapter(new ImageAdapter(this));
+    private void flipCard()
+    {
+        View rootLayout = (View) findViewById(R.id.main_activity_root);
+        View cardFace = (View) findViewById(R.id.main_activity_card_face);
+        View cardBack = (View) findViewById(R.id.main_activity_card_back);
 
-//        imageView.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//
-//                final int actionPeformed = motionEvent.getAction();
-//                switch(actionPeformed){
-//                    case MotionEvent.ACTION_DOWN:{
-//                        imageView.setImageResource(R.drawable.background);
-//                        break;
-//                    }
-//
-//                    case MotionEvent.ACTION_UP:{
-//                        imageView.setImageResource(R.drawable.back);
-//                        break;
-//                    }
-//                }
-//                return false;
-//            }
-//        });
+        FlipAnimation flipAnimation = new FlipAnimation(cardFace, cardBack);
+
+        if (cardFace.getVisibility() == View.GONE)
+        {
+            flipAnimation.reverse();
+        }
+        rootLayout.startAnimation(flipAnimation);
     }
 
 
