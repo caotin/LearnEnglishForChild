@@ -23,7 +23,7 @@ import java.util.Random;
 public class activity_play extends AppCompatActivity {
     ArrayList<Image> arrayList=new ArrayList<>();
     ImageAdapter imageAdapter;
-    ArrayList<Image> arrayList2=new ArrayList<>();
+    ArrayList<Image> showImage=new ArrayList<>();
     GridView gridView;
     int listNum[];
     List<Boolean> close=new ArrayList<>();
@@ -39,81 +39,12 @@ Context context;
         init();
         gridView=findViewById(R.id.gv_play);
 
-        listNum=random(3);
-        setDefault(3);
-        context=this;
+        listNum=random(4);
+        setDefault(4);
 
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                View v=view;
-                if (view == null) {
-                    LayoutInflater inflater = (LayoutInflater) context
-                            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-                    //here is where you inflate your layout containing your viewflipper
-                    view = inflater.inflate(R.layout.item_image, null);
-
-                }
-                View rootLayout = v.findViewById(R.id.main_flip_layout);
-                View cardFace = v.findViewById(R.id.img_item);
-                View cardBack = v.findViewById(R.id.img_item_back);
-
-                FlipAnimation flipAnimation = new FlipAnimation(cardFace, cardBack);
-
-                if (cardFace.getVisibility() == View.GONE)
-                {
-                    flipAnimation.reverse();
-                }
-                rootLayout.startAnimation(flipAnimation);
-
-//                if (close.get(i)){
-//                    return;
-//                }
-//
-//                if (listTick.get(i))
-//                    return;
-//                listTick.set(i,true);
-//
-//                tick.add(i);
-//                if (tick.size()==1){
-//                    arrayList2.set(i,arrayList.get(listNum[i]));
-//
-//
-//
-//                    imageAdapter.notifyDataSetChanged();
-//                    return;
-//                }
-//                if (tick.size()==2){
-//                    arrayList2.set(i,arrayList.get(listNum[i])); // hiển thị hình ảnh
-//                    imageAdapter.notifyDataSetChanged();
-//
-//                    if (listNum[tick.get(0)]==listNum[tick.get(1)]){ //thực hiện kiểm tra
-//                        arrayList2.set(tick.get(0),new Image(R.drawable.background,AudioManager.SCO_AUDIO_STATE_CONNECTED));
-//                        arrayList2.set(tick.get(1),new Image(R.drawable.background,AudioManager.SCO_AUDIO_STATE_CONNECTED));
-//                        imageAdapter.notifyDataSetChanged();
-//
-//                        close.set(tick.get(0),true);
-//                        close.set(tick.get(0),true);
-//
-//                        tick.clear();
-//                        return;
-//                    }else {
-//                        arrayList2.set(tick.get(0),new Image(R.drawable.back,AudioManager.SCO_AUDIO_STATE_CONNECTED));
-//                        imageAdapter.notifyDataSetChanged();
-//                        listTick.set(tick.get(0),false);
-//                        listTick.set(tick.get(1),false);
-//
-//                        tick.remove(0);
-//                    }
-//                }
-
-
-            }
-        });
-        imageAdapter=new ImageAdapter(this,arrayList2);
+        imageAdapter=new ImageAdapter(this,showImage);
         gridView.setAdapter(imageAdapter);
 
 
@@ -127,11 +58,7 @@ Context context;
     }
     public void setDefault(int num){
         for (int i=0;i<num*2;i++)
-            arrayList2.add(new Image(R.drawable.back,AudioManager.SCO_AUDIO_STATE_CONNECTED));
-        for (int i=0;i<num*2;i++)
-            listTick.add(false);
-        for (int i=0;i<num*2;i++)
-            close.add(false);
+            showImage.add(arrayList.get(listNum[i]));
     }
     public int[] random(int num){
         Random random=new Random();

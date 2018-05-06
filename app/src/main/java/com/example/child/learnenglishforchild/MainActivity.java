@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
@@ -37,7 +38,17 @@ public class MainActivity extends AppCompatActivity {
         fab_music=(FloatingActionButton) findViewById(R.id.btnMusic);
         fab_start=(FloatingActionButton) findViewById(R.id.btnStart);
         hideButton();
-
+        fab_sound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this);
+                builder
+                        .setContentTitle("Title")
+                        .setContentText("content")
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+            }
+        });
         btnGuide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
