@@ -7,15 +7,18 @@
 
     <RelativeLayout
         android:id="@+id/main_activity_card_face"
-        android:layout_width="300dp"
-        android:layout_height="407dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="9dp"
         android:background="@drawable/a2_of_clubs"
         android:clickable="true"
         android:onClick="onCardClick"
-        android:padding="5dp" >
-    </RelativeLayout>
+        android:padding="5dp"></RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/main_activity_card_back"
