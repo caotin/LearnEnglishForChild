@@ -32,9 +32,9 @@ public class TopicActivity extends AppCompatActivity {
     }
     private void init(){
         topics.add(new Topic(R.drawable.cow,"Animal",1));
-        topics.add(new Topic(R.drawable.cow,"Job",2));
-        topics.add(new Topic(R.drawable.cow,"Fruit",3));
-        topics.add(new Topic(R.drawable.cow,"Items",4));
+        topics.add(new Topic(R.drawable.teacher,"Job",2));
+        topics.add(new Topic(R.drawable.orange,"Fruit",3));
+        topics.add(new Topic(R.drawable.bed,"Items",4));
 
     }
 }
