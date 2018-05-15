@@ -112,13 +112,40 @@ public class PlayActivity extends AppCompatActivity {
                 arrayList.add(new Image(R.drawable.policeman,R.raw.policeman));
                 arrayList.add(new Image(R.drawable.singer,R.raw.singer));
                 arrayList.add(new Image(R.drawable.teacher,R.raw.teacher));
-
                 break;
             case 2:
+                arrayList.add(new Image(R.drawable.teacher,R.raw.apple1));
+                arrayList.add(new Image(R.drawable.teacher,R.raw.banana));
+                arrayList.add(new Image(R.drawable.teacher,R.raw.coconut));
+                arrayList.add(new Image(R.drawable.teacher,R.raw.dragon_fruits));
+                arrayList.add(new Image(R.drawable.teacher,R.raw.grape));
+                arrayList.add(new Image(R.drawable.teacher,R.raw.guava));
+                arrayList.add(new Image(R.drawable.teacher,R.raw.jackfruit));
+                arrayList.add(new Image(R.drawable.teacher,R.raw.laadstarfruit));
+                arrayList.add(new Image(R.drawable.teacher,R.raw.lemon));
+                arrayList.add(new Image(R.drawable.teacher,R.raw.mango));
+                arrayList.add(new Image(R.drawable.teacher,R.raw.orange));
+                arrayList.add(new Image(R.drawable.teacher,R.raw.pair1));
+                arrayList.add(new Image(R.drawable.teacher,R.raw.papaya));
+                arrayList.add(new Image(R.drawable.teacher,R.raw.strawberry));
+                arrayList.add(new Image(R.drawable.teacher,R.raw.watermelon));
                 break;
             case 3:
+                arrayList.add(new Image(R.drawable.Bed,R.raw.teacher));
+                arrayList.add(new Image(R.drawable.Telephone,R.raw.teacher));
+                arrayList.add(new Image(R.drawable.book,R.raw.teacher));
+                arrayList.add(new Image(R.drawable.clock,R.raw.teacher));
+                arrayList.add(new Image(R.drawable.dao,R.raw.teacher));
+                arrayList.add(new Image(R.drawable.den,R.raw.teacher));
+                arrayList.add(new Image(R.drawable.du,R.raw.teacher));
+                arrayList.add(new Image(R.drawable.ghe,R.raw.teacher));
+                arrayList.add(new Image(R.drawable.hat500x500,R.raw.teacher));
+                arrayList.add(new Image(R.drawable.quanao,R.raw.teacher));
+                arrayList.add(new Image(R.drawable.quat,R.raw.teacher));
+                arrayList.add(new Image(R.drawable.shoes,R.raw.teacher));
+                arrayList.add(new Image(R.drawable.table,R.raw.teacher));
+                arrayList.add(new Image(R.drawable.tivi,R.raw.teacher));
                 break;
-
             default:break;
 
         }
