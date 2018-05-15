@@ -15,9 +15,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity_play" />
-        <activity android:name=".test" />
-        <activity android:name=".ProcessBarActivity"></activity>
+        <activity android:name=".PlayActivity" />
+        <activity android:name=".ProcessBarActivity" />
+        <activity android:name=".SelectTopicActivity"></activity>
     </application>
 
 </manifest>

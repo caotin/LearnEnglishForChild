@@ -3,6 +3,7 @@ package com.example.child.learnenglishforchild;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NotificationCompat;
@@ -13,7 +14,12 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.app.AlertDialog;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
+
+
+
 
 
     FloatingActionButton fab_setting;
@@ -24,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnScore;
     Button btnExit;
     boolean showhide=false;
+    MediaPlayer mediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         fab_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this,activity_play.class);
+                Intent intent=new Intent(MainActivity.this,PlayActivity.class);
                 startActivity(intent);
             }
         });
@@ -77,6 +84,20 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        fab_music.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mediaPlayer.isPlaying()){
+                    mediaPlayer.stop();
+                    Toast.makeText(MainActivity.this, "Music: disabled", Toast.LENGTH_SHORT).show();
+                }
+
+                else
+                    playAudio();
+            }
+        });
+
+        playAudio();
     }
     private void hideButton(){
         fab_sound.hide();
@@ -89,30 +110,40 @@ public class MainActivity extends AppCompatActivity {
         showhide=false;
     }
     public void openDialog() {
-        AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
-                MainActivity.this);
+//        AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+//                MainActivity.this);
+//
+//        alertDialog2.setTitle("Confirm Delete...");
+//
+//        alertDialog2.setMessage("Are you sure you want delete this file?");
+//
+//        alertDialog2.setPositiveButton("YES",new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        Toast.makeText(getApplicationContext(),
+//                                "You clicked on YES", Toast.LENGTH_SHORT)
+//                                .show();
+//                    }
+//                });
+//
+//        alertDialog2.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        Toast.makeText(getApplicationContext(),
+//                                "You clicked on NO", Toast.LENGTH_SHORT)
+//                                .show();
+//                        dialog.cancel();
+//                    }
+//                });
+//
+//        alertDialog2.show();
+    }
 
-        alertDialog2.setTitle("Confirm Delete...");
+    public void playAudio(){
+        mediaPlayer=new MediaPlayer();
 
-        alertDialog2.setMessage("Are you sure you want delete this file?");
-
-        alertDialog2.setPositiveButton("YES",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(),
-                                "You clicked on YES", Toast.LENGTH_SHORT)
-                                .show();
-                    }
-                });
-
-        alertDialog2.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(),
-                                "You clicked on NO", Toast.LENGTH_SHORT)
-                                .show();
-                        dialog.cancel();
-                    }
-                });
-
-        alertDialog2.show();
+        mediaPlayer=MediaPlayer.create(this,R.raw.soundtrack);
+        mediaPlayer.setVolume(0.2f,0.2f);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.start();
+        Toast.makeText(this, "Music: enabled", Toast.LENGTH_SHORT).show();
     }
 }

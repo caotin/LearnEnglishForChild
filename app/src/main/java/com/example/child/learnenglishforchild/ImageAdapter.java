@@ -1,7 +1,10 @@
 package com.example.child.learnenglishforchild;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,13 +34,13 @@ public class ImageAdapter extends BaseAdapter {
     public ImageAdapter(Context c) {
         mContext = c;
     }
-
+    public static int point=0;
     public ImageAdapter(Context mContext, ArrayList<Image> arrayList) {
         this.mContext = mContext;
         this.arrayList = arrayList;
         listNum=new int[arrayList.size()];
         for (int i=0;i<this.arrayList.size();i++){
-            listback.add(new Image(R.drawable.back,0));
+            listback.add(new Image(R.drawable.back2,0));
         }
         savePosition=-1;
 
@@ -54,9 +57,11 @@ public class ImageAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
+    public int countPoint(int level){
+        return level*point;
+    }
 
-
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, ViewGroup parent) {
         final View view;
         if (convertView==null){
             LayoutInflater layoutInflater = ((Activity) mContext).getLayoutInflater();
@@ -71,27 +76,52 @@ public class ImageAdapter extends BaseAdapter {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (arrayList.get(position).getPicture()==android.R.color.transparent)
+                    return;
+                MediaPlayer mp=MediaPlayer.create(mContext,arrayList.get(position).getAudio());
+                mp.start();
+                mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.release();
+                    }
+                });
 
-                if (savePosition!=-1&&savePosition!=position)
-                if (arrayList.get(savePosition).getPicture()==arrayList.get(position).getPicture()){
-                    arrayList.set(savePosition,new Image(android.R.color.transparent,0));
-                    arrayList.set(position,new Image(android.R.color.transparent,0));
-                    listback.set(position,new Image(android.R.color.transparent,0));
-                    listback.set(savePosition,new Image(android.R.color.transparent,0));
+                if (savePosition!=-1&&savePosition!=position) {
+                    if (arrayList.get(savePosition).getPicture() == arrayList.get(position).getPicture()) {
+                        final Dialog dialog=new Dialog(mContext);
+                        dialog.setContentView(R.layout.item_dialog);
+                        point++;
+                        ImageView imageView=dialog.findViewById(R.id.img_dialog);
+                        imageView.setImageResource(arrayList.get(position).getPicture());
 
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            notifyDataSetChanged();
-                        }
-                    }, 1000);
+                        dialog.show();
+
+
+                        arrayList.set(savePosition, new Image(android.R.color.transparent, 0));
+                        arrayList.set(position, new Image(android.R.color.transparent, 0));
+                        listback.set(position, new Image(android.R.color.transparent, 0));
+                        listback.set(savePosition, new Image(android.R.color.transparent, 0));
+
+
+
+
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                                notifyDataSetChanged();
+                            }
+                        }, 2000);
+                    }else {
+                        savePosition=-1;
+                    }
                 }
                 savePosition=position;
                 flipCard(view);
             }
 
         });
-        System.out.println(arrayList.toString());
         front.setImageResource(arrayList.get(position).getPicture());
         back.setImageResource(listback.get(position).getPicture());
         return view;
