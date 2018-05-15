@@ -17,7 +17,8 @@
         </activity>
         <activity android:name=".PlayActivity" />
         <activity android:name=".ProcessBarActivity" />
-        <activity android:name=".SelectTopicActivity"></activity>
+        <activity android:name=".SelectTopicActivity" />
+        <activity android:name=".TopicActivity"></activity>
     </application>
 
 </manifest>

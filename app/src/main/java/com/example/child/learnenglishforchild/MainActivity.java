@@ -18,10 +18,6 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
-
-
     FloatingActionButton fab_setting;
     FloatingActionButton fab_sound;
     FloatingActionButton fab_music;
@@ -66,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         fab_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this,PlayActivity.class);
+                Intent intent=new Intent(MainActivity.this,TopicActivity.class);
                 startActivity(intent);
             }
         });
