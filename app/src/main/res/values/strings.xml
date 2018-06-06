@@ -2,9 +2,12 @@
     <string name="app_name">Learn English for child</string>
 
     <string name="title_activity_fullscreen">FullscreenActivity</string>
-    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_button">DUMMY CONTENT</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="animal">Animal</string>
     <string name="todo">TODO</string>
     <string name="select_topic">Select topic</string>
+    <string name="highest_score">Highest score</string>
+    <string name="guide">Guide</string>
+    <string name="exit">Exit</string>
 </resources>
