@@ -1,6 +1,7 @@
 package com.example.child.learnenglishforchild;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,17 +12,18 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class PlayActivity extends AppCompatActivity {
+public class PlayActivity extends AppCompatActivity implements ImageAdapter.DataInterface {
     ArrayList<Image> arrayList=new ArrayList<>();
     ImageAdapter imageAdapter;
     ArrayList<Image> showImage=new ArrayList<>();
     TextView txtPoint;
     GridView gridView;
+
     int listNum[];
     int point=0;
-    int level=10;
+    int level=1;
     boolean mark[];
-    int prePosition=-1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,46 +35,19 @@ public class PlayActivity extends AppCompatActivity {
         Intent intent=getIntent();
 
         init(intent.getIntExtra("idTopic",0));
+        setGridView();
+
+        txtPoint.setText(String.valueOf(imageAdapter.countPoint()));
+
+    }
+    public void setGridView(){
+        listNum=new int[level*2];
         listNum=random(level);
         setDefault(level);
-        mark=new boolean[showImage.size()];
-        for (int i=0;i<showImage.size();i++){
-            mark[i]=true;
-        }
-
-
-
 
 
         imageAdapter=new ImageAdapter(this,showImage);
-
         gridView.setAdapter(imageAdapter);
-
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                if (!mark[position]){
-//                    return;
-//                }
-                System.out.println(prePosition);
-                if (prePosition==-1){
-                    prePosition=position;
-                    return;
-                }
-                else{
-                    System.out.println(prePosition);
-                    if (showImage.get(position).getPicture()==showImage.get(prePosition).getPicture()){
-                        point+=level;
-                        txtPoint.setText(String.valueOf(point));
-
-                        mark[prePosition]=false;
-                        mark[position]=false;
-                    }
-                    prePosition=position;
-                }
-            }
-        });
-
     }
     public void init(int id){
         switch (id){
@@ -147,11 +122,16 @@ public class PlayActivity extends AppCompatActivity {
 //                arrayList.add(new Image(R.drawable.tivi,R.raw.));
                 break;
             default:break;
-
         }
-
-
     }
+
+//    @Override
+//    public void onConfigurationChanged(Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
+//
+//
+//    }
+
     public void setDefault(int num){
         for (int i=0;i<num*2;i++)
             showImage.add(arrayList.get(listNum[i]));
@@ -161,7 +141,7 @@ public class PlayActivity extends AppCompatActivity {
         int count=0;
         int n[]=new int[num];
         while(count<num){
-            n[count]=random.nextInt(arrayList.size());//random lay du lieu
+            n[count]=random.nextInt(arrayList.size());
             if (!check(n,count)){
                 count++;
             }
@@ -184,8 +164,6 @@ public class PlayActivity extends AppCompatActivity {
                 }
             }
         }
-
-
         return x;
     }
     public boolean check(int n[],int count){
@@ -200,6 +178,19 @@ public class PlayActivity extends AppCompatActivity {
 
 
     public void startAnimation(View view) {
+
+    }
+
+    @Override
+    public void OnClickData() {
+        imageAdapter.notifyDataSetChanged();
+        txtPoint.setText(String.valueOf((imageAdapter.countPoint()*level)));
+        if (imageAdapter.finish()){
+            level++;
+            showImage.clear();
+            imageAdapter.notifyDataSetChanged();
+            setGridView();
+        }
 
     }
 }

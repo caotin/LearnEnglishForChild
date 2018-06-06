@@ -25,17 +25,25 @@ import java.util.ArrayList;
  */
 
 public class ImageAdapter extends BaseAdapter {
+
+    private DataInterface dataInterface;
     private Context mContext;
     private ArrayList<Image> arrayList = new ArrayList<>();
     private ArrayList<Image> listback = new ArrayList<>();
     final Handler handler = new Handler();
+
     private int listNum[];
     private int savePosition;
-    public ImageAdapter(Context c) {
-        mContext = c;
-    }
     public static int point=0;
+
     public ImageAdapter(Context mContext, ArrayList<Image> arrayList) {
+
+        try {
+            this.dataInterface=(DataInterface) mContext;
+        } catch (ClassCastException e) {
+            throw new ClassCastException("Activity must implement AdapterCallback.");
+        }
+
         this.mContext = mContext;
         this.arrayList = arrayList;
         listNum=new int[arrayList.size()];
@@ -43,7 +51,6 @@ public class ImageAdapter extends BaseAdapter {
             listback.add(new Image(R.drawable.back2,0));
         }
         savePosition=-1;
-
     }
 
     public int getCount() {
@@ -57,8 +64,8 @@ public class ImageAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
-    public int countPoint(int level){
-        return level*point;
+    public int countPoint(){
+        return point;
     }
 
     public View getView(final int position, final View convertView, ViewGroup parent) {
@@ -76,6 +83,7 @@ public class ImageAdapter extends BaseAdapter {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (arrayList.get(position).getPicture()==android.R.color.transparent)
                     return;
                 MediaPlayer mp=MediaPlayer.create(mContext,arrayList.get(position).getAudio());
@@ -89,14 +97,14 @@ public class ImageAdapter extends BaseAdapter {
 
                 if (savePosition!=-1&&savePosition!=position) {
                     if (arrayList.get(savePosition).getPicture() == arrayList.get(position).getPicture()) {
+
+                        point++;
                         final Dialog dialog=new Dialog(mContext);
                         dialog.setContentView(R.layout.item_dialog);
-                        point++;
                         ImageView imageView=dialog.findViewById(R.id.img_dialog);
                         imageView.setImageResource(arrayList.get(position).getPicture());
 
                         dialog.show();
-
 
                         arrayList.set(savePosition, new Image(android.R.color.transparent, 0));
                         arrayList.set(position, new Image(android.R.color.transparent, 0));
@@ -104,21 +112,29 @@ public class ImageAdapter extends BaseAdapter {
                         listback.set(savePosition, new Image(android.R.color.transparent, 0));
 
 
-
-
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 dialog.dismiss();
                                 notifyDataSetChanged();
+                                if(mContext instanceof DataInterface){
+                                    ((DataInterface)mContext).OnClickData();
+                                }
                             }
                         }, 2000);
+
+                        if (finish()&&arrayList.size()==10){
+                            System.out.println("finish");
+                        }
+
                     }else {
                         savePosition=-1;
                     }
                 }
                 savePosition=position;
                 flipCard(view);
+
+
             }
 
         });
@@ -127,6 +143,14 @@ public class ImageAdapter extends BaseAdapter {
         return view;
     }
 
+    public boolean finish(){
+        for (Image image: arrayList){
+            if (image.getPicture()!=android.R.color.transparent){
+                return false;
+            }
+        }
+        return true;
+    }
 
     private void flipCard(View view)
     {
@@ -152,4 +176,11 @@ public class ImageAdapter extends BaseAdapter {
         }, 1500);
 
     }
+
+
+    public interface DataInterface {
+        void OnClickData();
+    }
+
 }
+
