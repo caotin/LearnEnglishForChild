@@ -8,17 +8,26 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PlayActivity" />
-        <activity android:name=".ProcessBarActivity" />
-        <activity android:name=".SelectTopicActivity" />
-        <activity android:name=".TopicActivity"></activity>
+        <activity android:name=".PlayActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".ProcessBarActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".SelectTopicActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".TopicActivity"
+            android:screenOrientation="portrait"
+            ></activity>
     </application>
 
 </manifest>

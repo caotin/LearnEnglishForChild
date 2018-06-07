@@ -8,6 +8,8 @@
     <string name="todo">TODO</string>
     <string name="select_topic">Select topic</string>
     <string name="highest_score">Highest score</string>
+    <string name="guideEn">To win this game, you must try your best to remember and to find out the same pictures in the shortest time.
+Pay attention to vocabulary and pronunciation in each picture.</string>
     <string name="guide">Guide</string>
     <string name="exit">Exit</string>
 </resources>

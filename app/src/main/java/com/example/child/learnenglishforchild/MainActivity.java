@@ -1,8 +1,10 @@
 package com.example.child.learnenglishforchild;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -55,9 +57,44 @@ public class MainActivity extends AppCompatActivity {
         btnGuide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openDialog();
-            }
+                AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                        MainActivity.this);
 
+                alertDialog2.setTitle(getResources().getString(R.string.guide));
+
+                alertDialog2.setMessage(getResources().getString(R.string.guideEn));
+
+
+                alertDialog2.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                alertDialog2.show();
+            }
+        });
+        btnScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences settings = getApplicationContext().getSharedPreferences("data", 0);
+                int homeScore = settings.getInt("level", 0);
+
+                AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                        MainActivity.this);
+
+                alertDialog2.setTitle("High Score");
+
+                alertDialog2.setMessage(String.valueOf(homeScore));
+
+                alertDialog2.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                alertDialog2.show();
+            }
         });
         fab_start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,16 +103,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        btnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
         fab_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (showhide==false){
                     hideButton();
-
                 }else{
                     showButton();
-
                 }
 
             }
@@ -87,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
                     mediaPlayer.stop();
                     Toast.makeText(MainActivity.this, "Music: disabled", Toast.LENGTH_SHORT).show();
                 }
-
                 else
                     playAudio();
             }
@@ -106,31 +145,43 @@ public class MainActivity extends AppCompatActivity {
         showhide=false;
     }
     public void openDialog() {
-//        AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
-//                MainActivity.this);
-//
-//        alertDialog2.setTitle("Confirm Delete...");
-//
-//        alertDialog2.setMessage("Are you sure you want delete this file?");
-//
-//        alertDialog2.setPositiveButton("YES",new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        Toast.makeText(getApplicationContext(),
-//                                "You clicked on YES", Toast.LENGTH_SHORT)
-//                                .show();
-//                    }
-//                });
-//
-//        alertDialog2.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        Toast.makeText(getApplicationContext(),
-//                                "You clicked on NO", Toast.LENGTH_SHORT)
-//                                .show();
-//                        dialog.cancel();
-//                    }
-//                });
-//
-//        alertDialog2.show();
+        AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                MainActivity.this);
+
+        alertDialog2.setTitle("Exit game");
+
+        alertDialog2.setMessage("Are you sure you want out of the game?");
+
+        alertDialog2.setPositiveButton("YES",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        dialog.dismiss();
+                    }
+                });
+
+        alertDialog2.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(),
+                                "You clicked on NO", Toast.LENGTH_SHORT)
+                                .show();
+                        dialog.cancel();
+                    }
+                });
+
+        alertDialog2.show();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mediaPlayer.start();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mediaPlayer.stop();
     }
 
     public void playAudio(){

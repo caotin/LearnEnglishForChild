@@ -9,4 +9,6 @@
     <string name="dummy_content">DUMMY CONTENT</string>
     <string name="dummy_button">DUMMY BUTTON</string>
     <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="todo">TODO</string>
+    <string name="guideEn">Nhiệm vụ của các bạn trong trò chơi này đó là tìm những cặp hình giống nhau trong thời gian sớm nhất. Chú ý đến từ và phát âm của các hình.</string>
 </resources>

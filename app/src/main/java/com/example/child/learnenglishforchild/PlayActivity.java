@@ -1,6 +1,8 @@
 package com.example.child.learnenglishforchild;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -22,8 +25,7 @@ public class PlayActivity extends AppCompatActivity implements ImageAdapter.Data
     int listNum[];
     int point=0;
     int level=1;
-    boolean mark[];
-
+    int highScore=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -191,6 +193,39 @@ public class PlayActivity extends AppCompatActivity implements ImageAdapter.Data
             imageAdapter.notifyDataSetChanged();
             setGridView();
         }
+        if (imageAdapter.countPoint()>highScore)
+            highScore=imageAdapter.countPoint();
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        point=0;
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        int defaultValue = 0;
+        highScore = sharedPref.getInt("highScore", defaultValue);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SharedPreferences settings = getApplicationContext().getSharedPreferences("data", 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("level", level);
+
+// Apply the edits!
+        editor.apply();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        point=0;
     }
 }
