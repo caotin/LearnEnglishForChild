@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Trò chơi ghi nhớ tiếng anh cho trẻ</string>
+    <string name="exit">Thoát</string>
+    <string name="guide">Hướng dẫn</string>
+    <string name="highest_score">Điểm cao nhất</string>
+    <string name="select_topic">Chọn thể loại</string>
+    <string name="animal">Động vật</string>
+    <string name="dummy_content">DUMMY CONTENT</string>
+    <string name="dummy_button">DUMMY BUTTON</string>
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="todo">TODO</string>
+    <string name="guideEn">Nhiệm vụ của các bạn trong trò chơi này đó là tìm những cặp hình giống nhau trong thời gian sớm nhất. Chú ý đến từ và phát âm của các hình.</string>
+    <string name="point">Điểm:</string>
+    <string name="level">Cấp:</string>
+    <string name="exitgame">Thoát game</string>
+    <string name="yes">có</string>
+    <string name="no">không</string>
+    <string name="messageoutgame" translatable="false">Bạn có chắc muốn thoát trò chơi không?</string>
+    <string name="messageno">Bạn đã chọn không</string>
+    <string name="pausegame">Dừng trò chơi</string>
+    <string name="stop">Dừng</string>
+    <string name="replay">Chơi tiếp</string>
+    <string name="finishgame">Kết thúc</string>
+    <string name="messagefinishgame">Bé giỏi quá!</string>
+</resources>

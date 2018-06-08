@@ -12,7 +12,9 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
-
+    <style name="MyDialogTheme" parent="android:Theme.Holo.Light">
+        <item name="android:background">@color/colorPink</item>
+    </style>
     <style name="FullscreenTheme" parent="AppTheme">
         <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
         <item name="android:windowActionBarOverlay">true</item>

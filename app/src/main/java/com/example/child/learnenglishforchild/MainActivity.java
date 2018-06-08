@@ -1,10 +1,14 @@
 package com.example.child.learnenglishforchild;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
@@ -12,8 +16,9 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.app.AlertDialog;
 
-public class MainActivity extends AppCompatActivity {
+import java.io.IOException;
 
+public class MainActivity extends AppCompatActivity {
 
     FloatingActionButton fab_setting;
     FloatingActionButton fab_sound;
@@ -23,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnScore;
     Button btnExit;
     boolean showhide=false;
+    MediaPlayer mediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,35 +43,96 @@ public class MainActivity extends AppCompatActivity {
         fab_music=(FloatingActionButton) findViewById(R.id.btnMusic);
         fab_start=(FloatingActionButton) findViewById(R.id.btnStart);
         hideButton();
-
+        fab_sound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this);
+                builder
+                        .setContentTitle("Title")
+                        .setContentText("content")
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+            }
+        });
         btnGuide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openDialog();
-            }
+                AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                        MainActivity.this,AlertDialog.THEME_HOLO_LIGHT);
 
+                alertDialog2.setTitle(getResources().getString(R.string.guide));
+
+                alertDialog2.setMessage(getResources().getString(R.string.guideEn));
+
+
+                alertDialog2.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                alertDialog2.show();
+            }
+        });
+        btnScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences settings = getApplicationContext().getSharedPreferences("data", 0);
+                int homeScore = settings.getInt("level", 0);
+
+                AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                        MainActivity.this,AlertDialog.THEME_HOLO_LIGHT);
+
+                alertDialog2.setTitle(getResources().getString(R.string.highest_score));
+
+                alertDialog2.setMessage(String.valueOf(homeScore));
+
+                alertDialog2.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                alertDialog2.show();
+            }
         });
         fab_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this,activity_play.class);
+                Intent intent=new Intent(MainActivity.this,TopicActivity.class);
                 startActivity(intent);
             }
         });
-
+        btnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
         fab_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (showhide==false){
                     hideButton();
-
                 }else{
                     showButton();
-
                 }
 
             }
         });
+        fab_music.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mediaPlayer.isPlaying()){
+                    mediaPlayer.stop();
+                    Toast.makeText(MainActivity.this, "Music: disabled", Toast.LENGTH_SHORT).show();
+                }
+                else
+                    playAudio();
+            }
+        });
+
+        playAudio();
     }
     private void hideButton(){
         fab_sound.hide();
@@ -79,29 +146,51 @@ public class MainActivity extends AppCompatActivity {
     }
     public void openDialog() {
         AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
-                MainActivity.this);
+                MainActivity.this,AlertDialog.THEME_HOLO_LIGHT);
 
-        alertDialog2.setTitle("Confirm Delete...");
+        alertDialog2.setTitle(getResources().getString(R.string.exitgame));
 
-        alertDialog2.setMessage("Are you sure you want delete this file?");
+        alertDialog2.setMessage(getResources().getString(R.string.messageoutgame));
 
-        alertDialog2.setPositiveButton("YES",new DialogInterface.OnClickListener() {
+        alertDialog2.setPositiveButton(getResources().getString(R.string.yes),new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(),
-                                "You clicked on YES", Toast.LENGTH_SHORT)
-                                .show();
+                        finish();
+                        dialog.dismiss();
                     }
                 });
 
-        alertDialog2.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        alertDialog2.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getApplicationContext(),
-                                "You clicked on NO", Toast.LENGTH_SHORT)
+                                getResources().getString(R.string.messageno), Toast.LENGTH_SHORT)
                                 .show();
                         dialog.cancel();
                     }
                 });
 
         alertDialog2.show();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mediaPlayer.start();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mediaPlayer.stop();
+    }
+
+    public void playAudio(){
+        mediaPlayer=new MediaPlayer();
+
+        mediaPlayer=MediaPlayer.create(this,R.raw.soundtrack);
+        mediaPlayer.setVolume(0.2f,0.2f);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.start();
+        Toast.makeText(this, "Music: enabled", Toast.LENGTH_SHORT).show();
     }
 }

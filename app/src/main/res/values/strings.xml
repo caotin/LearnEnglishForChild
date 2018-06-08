@@ -2,6 +2,28 @@
     <string name="app_name">Learn English for child</string>
 
     <string name="title_activity_fullscreen">FullscreenActivity</string>
-    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_button">DUMMY CONTENT</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="animal">Animal</string>
+    <string name="todo">TODO</string>
+    <string name="select_topic">Select topic</string>
+    <string name="highest_score">Highest score</string>
+    <string name="guideEn">To win this game, you must try your best to remember and to find out the same pictures in the shortest time.
+Pay attention to vocabulary and pronunciation in each picture.</string>
+    <string name="guide">Guide</string>
+    <string name="exit">Exit</string>
+    <string name="point">Point:</string>
+    <string name="exitgame">Exit game</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+    <string name="pausegame">Pause game</string>
+    <string name="stop">Stop</string>
+    <string name="replay">Replay</string>
+    <string name="messagepausegame" translatable="false"></string>
+    <string name="finishgame">Finish game</string>
+    <string name="messagefinishgame">Good game</string>
+    <string name="messageoutgame">Are you sure you want out of the game?</string>
+    <string name="messageno">You clicked on NO</string>
+    <string name="level">Level:</string>
+    <string name="ok" translatable="false">Ok</string>
 </resources>
