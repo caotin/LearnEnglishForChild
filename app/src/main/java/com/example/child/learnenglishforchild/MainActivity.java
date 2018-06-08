@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
-                        MainActivity.this);
+                        MainActivity.this,AlertDialog.THEME_HOLO_LIGHT);
 
                 alertDialog2.setTitle(getResources().getString(R.string.guide));
 
@@ -81,9 +81,9 @@ public class MainActivity extends AppCompatActivity {
                 int homeScore = settings.getInt("level", 0);
 
                 AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
-                        MainActivity.this);
+                        MainActivity.this,AlertDialog.THEME_HOLO_LIGHT);
 
-                alertDialog2.setTitle("High Score");
+                alertDialog2.setTitle(getResources().getString(R.string.highest_score));
 
                 alertDialog2.setMessage(String.valueOf(homeScore));
 
@@ -146,23 +146,23 @@ public class MainActivity extends AppCompatActivity {
     }
     public void openDialog() {
         AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
-                MainActivity.this);
+                MainActivity.this,AlertDialog.THEME_HOLO_LIGHT);
 
-        alertDialog2.setTitle("Exit game");
+        alertDialog2.setTitle(getResources().getString(R.string.exitgame));
 
-        alertDialog2.setMessage("Are you sure you want out of the game?");
+        alertDialog2.setMessage(getResources().getString(R.string.messageoutgame));
 
-        alertDialog2.setPositiveButton("YES",new DialogInterface.OnClickListener() {
+        alertDialog2.setPositiveButton(getResources().getString(R.string.yes),new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
                         dialog.dismiss();
                     }
                 });
 
-        alertDialog2.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        alertDialog2.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getApplicationContext(),
-                                "You clicked on NO", Toast.LENGTH_SHORT)
+                                getResources().getString(R.string.messageno), Toast.LENGTH_SHORT)
                                 .show();
                         dialog.cancel();
                     }

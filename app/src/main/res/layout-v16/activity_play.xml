@@ -46,7 +46,7 @@
         android:layout_alignLeft="@+id/gv_play"
         android:layout_alignStart="@+id/gv_play"
         android:fontFamily="casual"
-        android:text="Point:"
+        android:text="@string/point"
         android:textColor="@color/colorWhite"
         android:textSize="24sp" />
 
@@ -61,7 +61,7 @@
         android:layout_toEndOf="@+id/txt_point"
         android:layout_toRightOf="@+id/txt_point"
         android:fontFamily="casual"
-        android:text="Level:"
+        android:text="@string/level"
         android:textColor="@color/colorWhite"
         android:textSize="24sp" />
 

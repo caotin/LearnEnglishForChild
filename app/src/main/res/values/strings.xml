@@ -12,4 +12,18 @@
 Pay attention to vocabulary and pronunciation in each picture.</string>
     <string name="guide">Guide</string>
     <string name="exit">Exit</string>
+    <string name="point">Point:</string>
+    <string name="exitgame">Exit game</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+    <string name="pausegame">Pause game</string>
+    <string name="stop">Stop</string>
+    <string name="replay">Replay</string>
+    <string name="messagepausegame" translatable="false"></string>
+    <string name="finishgame">Finish game</string>
+    <string name="messagefinishgame">Good game</string>
+    <string name="messageoutgame">Are you sure you want out of the game?</string>
+    <string name="messageno">You clicked on NO</string>
+    <string name="level">Level:</string>
+    <string name="ok" translatable="false">Ok</string>
 </resources>

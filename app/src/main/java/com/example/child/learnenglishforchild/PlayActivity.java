@@ -1,6 +1,8 @@
 package com.example.child.learnenglishforchild;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -8,8 +10,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -21,26 +25,40 @@ public class PlayActivity extends AppCompatActivity implements ImageAdapter.Data
     ArrayList<Image> showImage=new ArrayList<>();
     TextView txtPoint;
     GridView gridView;
-
+    TextView txtLevel;
+    Button btnPause;
     int listNum[];
     int point=0;
+    int homeScore=0;
     int level=1;
-    int highScore=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
 
+        txtLevel=findViewById(R.id.txtLevel);
         txtPoint=findViewById(R.id.txt_point);
         gridView=findViewById(R.id.gv_play);
         txtPoint.setText(String.valueOf(point));
+        btnPause=findViewById(R.id.btnPause);
         Intent intent=getIntent();
 
+        ImageAdapter.point=0;
         init(intent.getIntExtra("idTopic",0));
         setGridView();
 
-        txtPoint.setText(String.valueOf(imageAdapter.countPoint()));
+        SharedPreferences settings = getApplicationContext().getSharedPreferences("data", 0);
+        homeScore = settings.getInt("level", 0);
 
+        txtPoint.setText(String.valueOf(imageAdapter.countPoint()));
+        txtLevel.setText(String.valueOf(level));
+
+        btnPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogPause();
+            }
+        });
     }
     public void setGridView(){
         listNum=new int[level*2];
@@ -51,6 +69,7 @@ public class PlayActivity extends AppCompatActivity implements ImageAdapter.Data
         imageAdapter=new ImageAdapter(this,showImage);
         gridView.setAdapter(imageAdapter);
     }
+
     public void init(int id){
         switch (id){
             case 0:
@@ -178,49 +197,103 @@ public class PlayActivity extends AppCompatActivity implements ImageAdapter.Data
         return false;
     }
 
+    public void dialogPause(){
+        AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                PlayActivity.this,AlertDialog.THEME_HOLO_LIGHT);
 
+        alertDialog2.setTitle(getResources().getString(R.string.pausegame));
+
+        alertDialog2.setMessage(getResources().getString(R.string.messagepausegame));
+
+        alertDialog2.setPositiveButton(getResources().getString(R.string.stop),new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+                dialog.dismiss();
+            }
+        });
+
+        alertDialog2.setNegativeButton(getResources().getString(R.string.replay), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        alertDialog2.show();
+    }
     public void startAnimation(View view) {
 
     }
 
     @Override
     public void OnClickData() {
+        if (level==11){
+            AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                    PlayActivity.this,AlertDialog.THEME_HOLO_LIGHT);
+
+            alertDialog2.setTitle(getResources().getString(R.string.finishgame));
+
+            alertDialog2.setMessage(getResources().getString(R.string.messagefinishgame));
+
+            alertDialog2.setPositiveButton(getResources().getString(R.string.ok),new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                    dialog.dismiss();
+                }
+            });
+
+//            alertDialog2.setNegativeButton(getResources().getString(R.string.replay), new DialogInterface.OnClickListener() {
+//                public void onClick(DialogInterface dialog, int which) {
+//                    dialog.cancel();
+//                }
+//            });
+
+            alertDialog2.show();
+            return;
+        }
+        SharedPreferences settings = getApplicationContext().getSharedPreferences("data", 0);
+//
         imageAdapter.notifyDataSetChanged();
         txtPoint.setText(String.valueOf((imageAdapter.countPoint()*level)));
+        if (imageAdapter.countPoint()*level>homeScore)
+            homeScore=imageAdapter.countPoint()*level;
         if (imageAdapter.finish()){
             level++;
             showImage.clear();
             imageAdapter.notifyDataSetChanged();
             setGridView();
         }
-        if (imageAdapter.countPoint()>highScore)
-            highScore=imageAdapter.countPoint();
+
+
+
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("level", homeScore);
+        editor.apply();
+
+        txtLevel.setText(String.valueOf(level));
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         point=0;
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        int defaultValue = 0;
-        highScore = sharedPref.getInt("highScore", defaultValue);
+//        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+//        int defaultValue = 0;
+//        highScore = sharedPref.getInt("highScore", defaultValue);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
+        dialogPause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        SharedPreferences settings = getApplicationContext().getSharedPreferences("data", 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putInt("level", level);
-
-// Apply the edits!
-        editor.apply();
+//        SharedPreferences settings = getApplicationContext().getSharedPreferences("data", 0);
+//        SharedPreferences.Editor editor = settings.edit();
+//        editor.putInt("level", level);
+//        editor.apply();
     }
 
     @Override

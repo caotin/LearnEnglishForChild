@@ -37,7 +37,6 @@ public class ImageAdapter extends BaseAdapter {
     public static int point=0;
 
     public ImageAdapter(Context mContext, ArrayList<Image> arrayList) {
-        point=0;
         try {
             this.dataInterface=(DataInterface) mContext;
         } catch (ClassCastException e) {
